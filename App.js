@@ -1,6 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Platform } from "react-native";
 import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
 import MapScreen from './screens/MapScreen';
@@ -30,19 +30,6 @@ const Navigator = createBottomTabNavigator({
     })
   }
 });
-
-/**
-createStackNavigator({
-  settings: SettingsScreen,
-  review:  {
-    screen: ReviewScreen,
-    navigationOptions: () => ({
-      title: `A`,
-      headerBackTitle: null
-    })
-  }
-})
-*/
 
 export default class App extends React.Component {
   render () {
