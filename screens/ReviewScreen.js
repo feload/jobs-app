@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, Platform } from 'react-native';
-import { Button } from "react-native-elements";
+import { View, Text, ScrollView, Linking } from 'react-native';
+import { Button, Card } from "react-native-elements";
+import { connect } from 'react-redux';
 
 class ReviewScreen extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -30,15 +31,48 @@ class ReviewScreen extends Component {
     this.props.navigation.navigate('settings');
   }
 
+  renderLikedJobs () {
+    return this.props.likedJobs.map(job => {
+      return (
+        <Card>
+          <View style={{ height: 200 }}>
+            <View style={styles.detailWrapper}>
+              <Text>{ job.company }</Text>
+              <Text>{ job.formattedRelativeTime }</Text>
+            </View>
+            <View>
+              <Button title="Apply"
+              onPress={() => Linking.openURL(job.url)} />
+            </View>
+          </View>
+        </Card>
+      );
+    });
+  }
+
   render () {
     return (
       <View>
-        <Text>ReviewScreen</Text>
-        <Text>ReviewScreen</Text>
-        <Text>ReviewScreen</Text>
+        <ScrollView>
+          { this.renderLikedJobs() }
+        </ScrollView>
       </View>
     );
   }
 }
 
-export default ReviewScreen;
+const styles = {
+  detailWrapper: {
+    marginBottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    likedJobs: state.likedJobs
+  }
+}
+
+export default connect(mapStateToProps)(ReviewScreen);
