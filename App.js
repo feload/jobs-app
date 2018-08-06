@@ -30,7 +30,13 @@ const Navigator = createBottomTabNavigator({
           settings: SettingsScreen
         })
       }
-    })
+    },
+    {
+      tabBarOptions: {
+        labelStyle: { fontSize: 12 }
+      }
+    }
+    )
   }
 },
 {
