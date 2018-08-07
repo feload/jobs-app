@@ -8,10 +8,9 @@ class ReviewScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: 'Review Jobs',
-      tabBar: {
-        icon:({ tintColor }) => {
+      tabBarIcon: ({ tintColor }) => {
         return <Icon name="favorite" color={tintColor} size={30} />;
-      }},
+      },
       headerRight: (
         <Button
           title="Settings"
