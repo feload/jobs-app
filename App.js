@@ -1,9 +1,10 @@
 import React from "react";
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Alert } from "react-native";
 import { Provider } from "react-redux";
 import { Icon } from 'react-native-elements';
 import store from "./store";
+import Expo, { Notifications } from 'expo';
 
 import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
@@ -11,6 +12,8 @@ import MapScreen from './screens/MapScreen';
 import DeckScreen from './screens/DeckScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import ReviewScreen from './screens/ReviewScreen';
+
+import registerForNotifications from './services/push_notifications';
 
 const Navigator = createBottomTabNavigator({
   welcome: WelcomeScreen,
@@ -53,6 +56,21 @@ const Navigator = createBottomTabNavigator({
 });
 
 export default class App extends React.Component {
+  componentDidMount () {
+    registerForNotifications();
+    Notifications.addListener((notification) => {
+      const { data: { text }, origin } = notification;
+
+      if (origin == 'received' && text){
+        Alert.alert(
+          'New Notification',
+          text,
+          [{ text: 'Ok' }]
+        );
+      }
+    });
+  }
+
   render () {
     return (
       <Provider store={store}>
